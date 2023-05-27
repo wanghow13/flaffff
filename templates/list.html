@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教室管理系统</title>
+       <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+
+        body {
+            background-image: url({{ url_for('static',filename='images/cool-background.png') }});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        img{
+            border-radius: 20px;
+        }
+
+    </style>
+</head>
+<body >
+<nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">教室管理</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">主页</a></li>
+          <li><a href="/">主机</a></li>
+            <li><a href="/email-list">邮件</a></li>
+          <li><a href="/about">关于</a></li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+            <li><a>欢迎 {{session.username}}</a></li>
+            <li><a href="/logout">退出</a></li>
+
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+    <div style="width: 100%;height: 100% ;">
+
+    <script>
+        (function () {
+            var a_idx = 0;
+            window.onclick = function (event) {
+                var a = new Array("❤富强❤", "❤民主❤", "❤文明❤", "❤和谐❤", "❤自由❤", "❤平等❤", "❤公正❤", "❤法治❤", "❤爱国❤",
+                    "❤敬业❤", "❤诚信❤", "❤友善❤");
+
+                var heart = document.createElement("b"); //创建b元素
+                heart.onselectstart = new Function('event.returnValue=false'); //防止拖动
+
+                document.body.appendChild(heart).innerHTML = a[a_idx]; //将b元素添加到页面上
+                a_idx = (a_idx + 1) % a.length;
+                heart.style.cssText = "position: fixed;left:-100%;"; //给p元素设置样式
+
+                var f = 16, // 字体大小
+                    x = event.clientX - f / 2, // 横坐标
+                    y = event.clientY - f, // 纵坐标
+                    c = randomColor(), // 随机颜色
+                    a = 1, // 透明度
+                    s = 1.2; // 放大缩小
+
+                var timer = setInterval(function () { //添加定时器
+                    if (a <= 0) {
+                        document.body.removeChild(heart);
+                        clearInterval(timer);
+                    } else {
+                        heart.style.cssText = "font-size:16px;cursor: default;position: fixed;color:" +
+                            c + ";left:" + x + "px;top:" + y + "px;opacity:" + a + ";transform:scale(" +
+                            s + ");";
+
+                        y--;
+                        a -= 0.016;
+                        s += 0.002;
+                    }
+                }, 15)
+
+            }
+            // 随机颜色
+            function randomColor() {
+
+                return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math
+                .random() * 255)) + ")";
+
+            }
+        }());
+    </script>
+    <span class="js-cursor-container"></span>
+    <script>
+        (function fairyDustCursor() {
+
+            var possibleColors = ["#D61C59", "#E7D84B", "#1B8798"]
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+            var cursor = { x: width / 2, y: width / 2 };
+            var particles = [];
+
+            function init() {
+                bindEvents();
+                loop();
+            }
+
+
+            function bindEvents() {
+                document.addEventListener('mousemove', onMouseMove);
+                window.addEventListener('resize', onWindowResize);
+            }
+
+            function onWindowResize(e) {
+                width = window.innerWidth;
+                height = window.innerHeight;
+            }
+
+            function onMouseMove(e) {
+                cursor.x = e.clientX;
+                cursor.y = e.clientY;
+
+                addParticle(cursor.x, cursor.y, possibleColors[Math.floor(Math.random() * possibleColors.length)]);
+            }
+
+            function addParticle(x, y, color) {
+                var particle = new Particle();
+                particle.init(x, y, color);
+                particles.push(particle);
+            }
+
+            function updateParticles() {
+
+
+                for (var i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                }
+
+
+                for (var i = particles.length - 1; i >= 0; i--) {
+                    if (particles[i].lifeSpan < 0) {
+                        particles[i].die();
+                        particles.splice(i, 1);
+                    }
+                }
+
+            }
+
+            function loop() {
+                requestAnimationFrame(loop);
+                updateParticles();
+            }
+
+
+
+            function Particle() {
+
+                this.character = "*";
+                this.lifeSpan = 120; //ms
+                this.initialStyles = {
+                    "position": "fixed",
+                    "display": "inline-block",
+                    "top": "0px",
+                    "left": "0px",
+                    "pointerEvents": "none",
+                    "touch-action": "none",
+                    "z-index": "10000000",
+                    "fontSize": "25px",
+                    "will-change": "transform"
+                };
+
+
+                this.init = function (x, y, color) {
+
+                    this.velocity = {
+                        x: (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
+                        y: 1
+                    };
+
+                    this.position = { x: x + 10, y: y + 10 };
+                    this.initialStyles.color = color;
+
+                    this.element = document.createElement('span');
+                    this.element.innerHTML = this.character;
+                    applyProperties(this.element, this.initialStyles);
+                    this.update();
+
+                    document.querySelector('.js-cursor-container').appendChild(this.element);
+                };
+
+                this.update = function () {
+                    this.position.x += this.velocity.x;
+                    this.position.y += this.velocity.y;
+                    this.lifeSpan--;
+
+                    this.element.style.transform = "translate3d(" + this.position.x + "px," + this.position.y + "px, 0) scale(" + (this.lifeSpan / 120) + ")";
+                }
+
+                this.die = function () {
+                    this.element.parentNode.removeChild(this.element);
+                }
+
+            }
+
+
+            function applyProperties(target, properties) {
+                for (var key in properties) {
+                    target.style[key] = properties[key];
+                }
+            }
+
+            if (!('ontouchstart' in window || navigator.msMaxTouchPoints)) init();
+        })();
+    </script>
+
+
+
+        <div style="width: 75%;height: 100% ;margin-left: 16%;color: red">
+        <button><h2>教室管理系统</h2></button>
+            <hr>
+            {% for i in mylist %}
+                 <div style="float: left;width: 22%;height: 50%;margin-top: 4% ;margin-left: 1%;margin-right: auto;text-align: center" >
+                    <img src="{{  url_for('static', filename='images/R.jpg') }}"  width="100%" height="70%" >
+                     <br>
+                     <a href="{{i.url}}"><p style="overflow: hidden;font-size: medium;" >ID:{{i.id}},name：{{i.name}}</p></a>
+                 <h3><button type="button" class="btn btn-primary" onclick="myfunc1()">详情</button>
+	                    <button type="button" class="btn btn-success" onclick="myfunc2()">开机</button>
+		                <button type="button" class="btn btn-danger" onclick="myfunc3()">关机</button>
+                        <button type="button" class="btn btn-info" onclick="myfunc3()">日志打包</button>
+                </div>
+            {% endfor %}
+        </div>
+    <div id="content" class="mw-body" role="main"></div>
+    <script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+
+<script>
+    L2Dwidget.init({
+        "model": {
+            "jsonPath": "https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "left",
+            "width": 150,
+            "height": 300,
+            "hOffset": 0,
+            "vOffset": -20
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.5
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        }
+    });
+</script>
+    <div class="sakana-box" style="float: right;position: fixed ;right: 0px"></div>
+    <script src="https://cdn.jsdelivr.net/npm/sakana"></script>
+<script>
+Sakana.init({
+  el:         '.sakana-box',     // 启动元素 node 或 选择器
+  scale:      .5,                // 缩放倍数
+  canSwitchCharacter: true,      // 允许换角色
+});
+</script>
+
+    </div>
+
+</body>
+</html>

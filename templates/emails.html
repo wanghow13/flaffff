@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email List</title>
+</head>
+<body>
+    <h1>Total emails: {{ num_emails }}</h1>
+    <h2>Email list:</h2>
+    <ul>
+        {% for email in emails %}
+            <li>{{ email }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

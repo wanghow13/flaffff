@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邮件列表</title>
+      <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+
+        body {
+            background-image: url({{ url_for('static',filename='images/cool-background.png') }});
+            background-size: cover;
+            {#background-repeat: no-repeat;#}
+            {#background-position: center;#}
+        }
+
+        img{
+            border-radius: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+    <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">教室管理</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">主页</a></li>
+          <li><a href="/">主机</a></li>
+            <li><a href="/email-list">邮件</a></li>
+          <li><a href="/about">关于</a></li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+            <li><a>欢迎 {{session.username}}</a></li>
+            <li><a href="/logout">退出</a></li>
+
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+    <div style="width: 75%;height: 100% ;margin-left: 16%;color: red">
+    <h1>the authors are:</h1>
+     <table class="table table-striped table-bordered table-hover table-condensed">
+    <tr>
+      <th>id</th>
+      <th>from</th>
+      <th>date/th>
+      <th>subjuct</th>
+    </tr>
+
+    {% for i in mylist %}
+         <tr class="table-success">
+             <td>0</td><td>{{i.from}}</td><td>{{i.date}}</td><td>{{i.subject}}</td>
+         </tr>
+    {% endfor %}
+     </table>
+    </div>
+</body>
+</html>

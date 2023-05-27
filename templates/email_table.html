@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Email List</h1>
+    <table>
+        <tr>
+            <th>Subject</th>
+            <th>From</th>
+            <th>Date</th>
+        </tr>
+        {% for email in emails %}
+        <tr>
+            <td>{{ email.subject }}</td>
+            <td>{{ email.from }}</td>
+            <td>{{ email.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
